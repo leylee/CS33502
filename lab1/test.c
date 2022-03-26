@@ -1,1 +1,5 @@
-int a = 099;
+int inc()
+{
+    int i;
+    i = i + 1;
+}

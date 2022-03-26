@@ -1,2 +1,4 @@
 /main
 /yylex
+*.o
+.vscode

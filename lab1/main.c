@@ -1,6 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "lex.yy.h"
+#include "syntax.tab.h"
+
+extern YYSTYPE yyval;
 
 int main(int argc, char* argv[]) {
 	if (argc > 2) {
@@ -14,6 +17,9 @@ int main(int argc, char* argv[]) {
 		}
 	}
 
-	while (yylex() != 0);
+	int type;
+	while (type = yyparse()) {
+		printf("%d\n", type);
+	};
 	return 0;
 }
