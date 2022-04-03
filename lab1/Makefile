@@ -1,7 +1,7 @@
 build: yylex
 
 .PHONY: run
-run: build_
+run: build
 	./yylex
 
 yylex: lex.yy.c main.c lex.yy.h syntax.tab.c syntax.tab.h node.c node.h util.h util.c
