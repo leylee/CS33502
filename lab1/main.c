@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
 
 	int type;
 	while (type = yyparse()) {
-		printf("%d\n", type);
+		// printf("%d\n", type);
 	};
 	return 0;
 }

@@ -1,6 +1,9 @@
 #include "node.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
+
+bool error = false;
 
 const char* TYPE_NAME[] = {
     [T_INT]="INT", [T_FLOAT]="FLOAT",
@@ -41,11 +44,14 @@ Node* newNode(int lineno, Type type, void *data, int sonCount, Node* sons[]) {
             break;
         }
     }
-    printf("New node created: %d\n", type);
+    // printf("New node created: %d\n", type);
     return node;
 }
 
 void printTree(Node *node, int depth) {
+    if (error) {
+        return;
+    }
     if (node == NULL) {
         return;
     }

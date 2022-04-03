@@ -1,6 +1,6 @@
 %code requires {
 #include "node.h"
-#define YYDEBUG 1
+// #define YYDEBUG 1
 }
 
 %{
@@ -9,7 +9,7 @@
 
 #include "lex.yy.h"
 %}
-%define parse.trace
+/* %define parse.trace */
 %union {
     Node *node;
 }
@@ -77,6 +77,7 @@ ParamDec: Specifier VarDec {$$ = newNode(yylineno, T_PARAMDEC, NULL, 2, (Node*[]
 
 
 CompSt: LC DefList StmtList RC {$$ = newNode(yylineno, T_COMPST, NULL, 4, (Node*[]) {$1, $2, $3, $4});}
+    | error RC
     ;
 StmtList: Stmt StmtList {$$ = newNode(yylineno, T_STMTLIST, NULL, 2, (Node*[]) {$1, $2});}
     | {$$ = newNode(yylineno, T_STMTLIST, NULL, 0, (Node*[]) {});}
@@ -86,6 +87,7 @@ Stmt: Exp SEMI {$$ = newNode(yylineno, T_STMT, NULL, 2, (Node*[]) {$1, $2});}
     | IF LP Exp RP Stmt {$$ = newNode(yylineno, T_STMT, NULL, 5, (Node*[]) {$1, $2, $3, $4, $5});}
     | IF LP Exp RP Stmt ELSE Stmt {$$ = newNode(yylineno, T_STMT, NULL, 7, (Node*[]) {$1, $2, $3, $4, $5, $6, $7});}
     | WHILE LP Exp RP Stmt {$$ = newNode(yylineno, T_STMT, NULL, 5, (Node*[]) {$1, $2, $3, $4, $5});}
+    | error SEMI
     ;
 
 DefList: Def DefList {$$ = newNode(yylineno, T_DEFLIST, NULL, 2, (Node*[]) {$1, $2});}
@@ -118,6 +120,7 @@ Exp: Exp ASSIGNOP Exp {$$ = newNode(yylineno, T_EXP, NULL, 3, (Node*[]) {$1, $2,
     | ID {$$ = newNode(yylineno, T_EXP, NULL, 1, (Node*[]) {$1});}
     | INT {$$ = newNode(yylineno, T_EXP, NULL, 1, (Node*[]) {$1});}
     | FLOAT {$$ = newNode(yylineno, T_EXP, NULL, 1, (Node*[]) {$1});}
+    /* | error RP */
     ;
 Args: Exp COMMA Args {$$ = newNode(yylineno, T_ARGS, NULL, 3, (Node*[]) {$1, $2, $3});}
     | Exp {$$ = newNode(yylineno, T_ARGS, NULL, 1, (Node*[]) {$1});}
@@ -126,5 +129,6 @@ Args: Exp COMMA Args {$$ = newNode(yylineno, T_ARGS, NULL, 3, (Node*[]) {$1, $2,
 #include <stdio.h>
 
 void yyerror(char *msg) {
+    error = true;
     fprintf(stderr, "Error type B at line %d: %s.\n", yylineno, msg);
 }

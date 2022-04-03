@@ -1,6 +1,10 @@
 #ifndef MY_NODE_H__
 #define MY_NODE_H__
 
+#include <stdbool.h>
+
+extern bool error;
+
 enum Type {
     T_INT, T_FLOAT,
     T_SEMI, T_COMMA,

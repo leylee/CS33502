@@ -39,7 +39,7 @@
 # define YY_YY_SYNTAX_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 1
+# define YYDEBUG 0
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -48,7 +48,7 @@ extern int yydebug;
 #line 1 "syntax.y"
 
 #include "node.h"
-#define YYDEBUG 1
+// #define YYDEBUG 1
 
 #line 54 "syntax.tab.h"
 
