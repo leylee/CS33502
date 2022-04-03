@@ -1,8 +1,8 @@
-.PHONY: run_yylex
-run_yylex: build_yylex
-	./yylex
+build: yylex
 
-build_yylex: yylex
+.PHONY: run
+run: build_
+	./yylex
 
 yylex: lex.yy.c main.c lex.yy.h syntax.tab.c syntax.tab.h node.c node.h util.h util.c
 	gcc -g main.c lex.yy.c syntax.tab.c node.c util.c -o main -lfl
